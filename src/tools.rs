@@ -254,7 +254,7 @@ async fn find_system(app: Application, version: &str) -> Option<PathBuf> {
     };
 
     match result().await {
-        Ok((path, system_version)) => (system_version == version).then(|| path),
+        Ok((path, system_version)) => ("system" == version || system_version == version).then(|| path),
         Err(e) => {
             tracing::debug!("system version not found for {}: {}", app.name(), e);
             None
